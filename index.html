@@ -1,0 +1,29 @@
+<h1>Large Text Uploader - Ethereum</h1>
+<p>This tool uses EIP-4844 calldata to upload large batches of text to the Ethereum blockchain</p>
+
+<textarea placeholder="Copy text here..." rows="20" cols="80" id="upload-text"></textarea>
+<br>
+<button id="submit-text">Upload</button>
+
+<script>
+document.getElementById('submit-text').addEventListener('click', async function (e) {
+    const text = document.getElementById('upload-text').value 
+      .split("")
+      .map(c => c.charCodeAt(0).toString(16).padStart(2, "0"))
+      .join("")
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts"
+    })
+    const txHash = await window.ethereum.request({
+      method: "eth_sendTransaction",
+      params: [
+        {
+          from: accounts[0],
+          to: accounts[0],
+          value: '0',
+          data: '0x' + text
+        },
+      ],
+    })
+})
+</script>
