@@ -1,8 +1,6 @@
 <h1>Large Text Uploader - Ethereum</h1>
 <p>This tool uses EIP-4844 calldata to upload large batches of text to the Ethereum blockchain</p>
-<p>The maximum size of an upload varies based on the block gas limit and the Metamask node you're connected to. 
-  The block gas limit varies from 1-2M English characters (200k-1M characters for non-English languages).
-  Oftentimes though, anything greater than 500k English characters will get rejected by Metamask, so you may have to split your text into parts based on that.</p>
+<p>Each transaction has a limit of 100k characters, so please split larger texts into parts</p>
 
 <textarea placeholder="Copy text here..." rows="20" cols="80" id="upload-text"></textarea>
 <p>Character Count: <span id="char-count">0</span></p>
@@ -12,11 +10,18 @@
 // Update char count while typing
 document.getElementById('upload-text').addEventListener('input', async function (e) {
   const charCount = document.getElementById('upload-text').value.length
-  document.getElementById('char-count').innerHTML = charCount
+  document.getElementById('char-count').innerHTML = charCount + " / 100000"
+  if (charCount > 100000) {
+    document.getElementById('char-count').style.color = 'red'
+  }
+  else {
+    document.getElementById('char-count').style.color = 'black'
+  }
 })
 
 document.getElementById('submit-text').addEventListener('click', async function (e) {
   const charCount = document.getElementById('upload-text').value.length
+  if (charCount > 100000) return;
   const text = document.getElementById('upload-text').value 
     .split("")
     .map(c => c.charCodeAt(0).toString(16).padStart(2, "0"))
