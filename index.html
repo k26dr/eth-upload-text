@@ -21,7 +21,7 @@ document.getElementById('upload-text').addEventListener('input', async function 
 
 document.getElementById('submit-text').addEventListener('click', async function (e) {
   const charCount = document.getElementById('upload-text').value.length
-  if (charCount > 100000) return;
+  if (charCount > 400000) return;
   const text = document.getElementById('upload-text').value 
     .split("")
     .map(c => c.charCodeAt(0).toString(16).padStart(2, "0"))
