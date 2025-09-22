@@ -15,9 +15,10 @@ document.getElementById('upload-text').addEventListener('input', async function 
 
 document.getElementById('submit-text').addEventListener('click', async function (e) {
   const charCount = document.getElementById('upload-text').value.length
-  const text = document.getElementById('upload-text').value 
-    .split("")
-    .map(c => c.charCodeAt(0).toString(16).padStart(2, "0"))
+  const text = document.getElementById('upload-text').value
+  const textEncoder = new TextEncoder();
+  const utf8text = textEncoder.encode(text)
+    .map(c => c.toString(16))
     .join("")
   const accounts = await window.ethereum.request({
     method: "eth_requestAccounts"
@@ -29,7 +30,7 @@ document.getElementById('submit-text').addEventListener('click', async function 
         from: accounts[0],
         to: "0x0000000000000000000000000000000000000000",
         value: '0',
-        data: '0x' + text
+        data: '0x' + utf8text
       },
     ],
   })
