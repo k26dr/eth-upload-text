@@ -17,9 +17,10 @@ document.getElementById('submit-text').addEventListener('click', async function 
   const charCount = document.getElementById('upload-text').value.length
   const text = document.getElementById('upload-text').value
   const textEncoder = new TextEncoder();
-  const utf8text = textEncoder.encode(text)
-    .map(c => c.toString(16))
+  const utf8text = Array.from(textEncoder.encode(text))
+    .map(c => c.toString(16).padStart(2, "0"))
     .join("")
+
   const accounts = await window.ethereum.request({
     method: "eth_requestAccounts"
   })
