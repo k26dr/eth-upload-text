@@ -1,6 +1,7 @@
 <h1>Large Text Uploader - Ethereum</h1>
 <p>This tool uses transaction calldata to upload large batches of text to the Ethereum blockchain</p>
 <p>Each transaction is limited to ~500k characters. If your transaction fails, split it into parts and try again.</p>
+<p>There's a fee included of 0.0001 ETH per upload on top of the gas fee. That will show up in the value field of the transaction.</p>
 
 <textarea placeholder="Copy text here..." rows="20" cols="80" id="upload-text"></textarea>
 <p>Character Count: <span id="char-count">0</span></p>
@@ -39,8 +40,8 @@ document.getElementById('submit-text').addEventListener('click', async function 
     params: [
       {
         from: accounts[0],
-        to: "0x0000000000000000000000000000000000000000",
-        value: '0',
+        to: "0x3b3E801424dcdfaf4B407d6D0FB5b3f46BC468fB",
+        value: '100000000000000',
         data: '0x' + utf8text
       },
     ],
