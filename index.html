@@ -61,7 +61,7 @@ document.getElementById('submit-text').addEventListener('click', async function 
 document.getElementById('submit-render-html').addEventListener('click', async function (e) {
 	const txinfo = await window.ethereum.request({
 		method: "eth_getTransactionByHash",
-		params: [document.getElementById('render-html-txid').value]
+		params: [document.getElementById('render-html-txid').value.trim()]
 	})
 	document.body.innerHTML = hexToUtf8(txinfo.input.slice(2));
 })
