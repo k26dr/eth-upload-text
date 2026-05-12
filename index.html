@@ -16,6 +16,15 @@
 <p>There's also a Twitter account dedicated to this project here: <a href="https://x.com/zigzagxc">zigzagxc</a></p>
 
 
+<h1>Render HTML</h1>
+
+<p>If you used the tool above to upload HTML, we can render that HTML as a webpage by inputting the transaction ID here. Session and local storage are shared, so make sure not to upload anything that stores sensitive data in those areas.</p>
+
+
+<input id="render-html-txid" size="80" placeholder="Insert txid here">
+<button id="submit-render-html">Go</button>
+
+
 <script>
 // Update char count while typing
 document.getElementById('upload-text').addEventListener('input', async function (e) {
@@ -46,4 +55,19 @@ document.getElementById('submit-text').addEventListener('click', async function 
     ],
   })
 })
+
+document.getElementById('submit-render-html').addEventListener('click', async function (e) {
+	const txinfo = await window.ethereum.request({
+		method: "eth_getTransactionByHash",
+		params: [document.getElementById('render-html-txid').value]
+	})
+	document.body.innerHTML = hexToUtf8(txinfo.input.slice(2));
+})
+
+function hexToUtf8(s) {
+  return decodeURIComponent(
+     s.replace(/\s+/g, '') // remove spaces
+      .replace(/[0-9a-f]{2}/g, '%$&') // add '%' before each 2 characters
+  );
+}
 </script>
