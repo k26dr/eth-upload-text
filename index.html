@@ -1,14 +1,3 @@
-<h1>Render Text</h1>
-
-<p>To view text you've uploaded, enter the TXID of the upload.</p>
-
-<p>
-	<input id="render-html-txid" size="80" placeholder="Insert txid here">
-	<button id="submit-render-text">Render Text</button>
-</p>
-<div id="textview"></div>
-
-
 <h1>Large Text Uploader - Ethereum</h1>
 <p>This tool uses transaction calldata to upload large batches of text to the Ethereum blockchain</p>
 <p>Each transaction is limited to ~500k characters. If your transaction fails, split it into parts and try again.</p>
@@ -26,6 +15,15 @@
 
 <p>There's also a Twitter account dedicated to this project here: <a href="https://x.com/zigzagxc">zigzagxc</a></p>
 
+<h1>View Text</h1>
+
+<p>To view text you've uploaded, enter the TXID of the upload.</p>
+
+<p>
+	<input id="render-html-txid" size="80" placeholder="Insert txid here">
+	<button id="submit-render-text">View</button>
+</p>
+<div id="textview"></div>
 
 
 <script>
@@ -66,7 +64,7 @@ document.getElementById('submit-render-text').addEventListener('click', async fu
 		method: "eth_getTransactionByHash",
 		params: [txid]
 	})
-	document.getElementById('textview').innerHTML = hexToUtf8(txinfo.input.slice(2)).replace(/\n/g, '<br>');
+	document.getElementById('textview').innerText = hexToUtf8(txinfo.input.slice(2))
 })
 
 function hexToUtf8(s) {
