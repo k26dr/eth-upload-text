@@ -8,6 +8,7 @@
 
 <p>Session and local storage are shared, so make sure not to upload anything that stores sensitive data in those areas.</p>
 
+<p>After rendering, hit the refresh button if you want to come back to this landing page.</p> 
 
 <input id="render-html-txid" size="80" placeholder="Insert txid here">
 <button id="submit-render-html">Render HTML</button>
@@ -33,16 +34,6 @@
 
 
 <script>
-// If txid and type are set, render it
-const urlParams = new URLSearchParams(window.location.search);
-if (urlParams.size == 2 && urlParams.get('txid') && urlParams.get('type')) {
-	window.addEventListener('load', function (e) {
-		document.getElementById('render-html-txid').value = urlParams.get('txid')
-		if (urlParams.get('type') == 'text') document.getElementById('submit-render-text').click()
-		else if (urlParams.get('type') == 'html') document.getElementById('submit-render-html').click()
-	})
-}
-
 
 // Update char count while typing
 document.getElementById('upload-text').addEventListener('input', async function (e) {
@@ -81,10 +72,6 @@ document.getElementById('submit-render-html').addEventListener('click', async fu
 		params: [txid]
 	})
 	document.body.innerHTML = hexToUtf8(txinfo.input.slice(2));
-	if (history.pushState) {
-	    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?txid=' + txid + '&type=html'
-	    window.history.pushState({path:newurl},'',newurl)
-	}
 })
 
 document.getElementById('submit-render-text').addEventListener('click', async function (e) {
@@ -94,10 +81,6 @@ document.getElementById('submit-render-text').addEventListener('click', async fu
 		params: [txid]
 	})
 	document.body.innerHTML = hexToUtf8(txinfo.input.slice(2)).replace(/\n/g, '<br>');
-	if (history.pushState) {
-	    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?txid=' + txid + '&type=text'
-	    window.history.pushState({path:newurl},'',newurl)
-	}
 })
 
 function hexToUtf8(s) {
