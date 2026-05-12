@@ -1,18 +1,13 @@
-<h1>Render Text / HTML</h1>
+<h1>Render Text</h1>
 
-<p>If you use the tool below to upload text or HTML to Ethereum, you can render the stored data by inputting the transaction ID here.</p> 
+<p>To view text you've uploaded, enter the TXID of the upload.</p>
 
-<p>"Render HTML" renders the code directly, while "Render Text" replaces all endline characters with HTML link breaks to make it more friendly to read on a browser.</p>
+<p>
+	<input id="render-html-txid" size="80" placeholder="Insert txid here">
+	<button id="submit-render-text">Render Text</button>
+</p>
+<div id="textview"></div>
 
-<p>Javascript + CSS are permitted in uploaded code.</p>
-
-<p>Session storage, local storage, and cookies are shared, so don't load any webpages that use those.</p>
-
-<p>After rendering, hit the refresh button if you want to come back to this landing page.</p> 
-
-<input id="render-html-txid" size="80" placeholder="Insert txid here">
-<button id="submit-render-html">Render HTML</button>
-<button id="submit-render-text">Render Text</button>
 
 <h1>Large Text Uploader - Ethereum</h1>
 <p>This tool uses transaction calldata to upload large batches of text to the Ethereum blockchain</p>
@@ -65,22 +60,13 @@ document.getElementById('submit-text').addEventListener('click', async function 
   })
 })
 
-document.getElementById('submit-render-html').addEventListener('click', async function (e) {
-	const txid = document.getElementById('render-html-txid').value.trim()
-	const txinfo = await window.ethereum.request({
-		method: "eth_getTransactionByHash",
-		params: [txid]
-	})
-	document.body.innerHTML = hexToUtf8(txinfo.input.slice(2));
-})
-
 document.getElementById('submit-render-text').addEventListener('click', async function (e) {
 	const txid = document.getElementById('render-html-txid').value.trim()
 	const txinfo = await window.ethereum.request({
 		method: "eth_getTransactionByHash",
 		params: [txid]
 	})
-	document.body.innerHTML = hexToUtf8(txinfo.input.slice(2)).replace(/\n/g, '<br>');
+	document.getElementById('textview').innerHTML = hexToUtf8(txinfo.input.slice(2)).replace(/\n/g, '<br>');
 })
 
 function hexToUtf8(s) {
