@@ -64,7 +64,7 @@ document.getElementById('submit-render-text').addEventListener('click', async fu
 		method: "eth_getTransactionByHash",
 		params: [txid]
 	})
-	document.getElementById('textview').innerText = hexToUtf8(txinfo.input.slice(2))
+	document.getElementById('textview').innerText = hexToUtf8(txinfo.input.slice(2)).replace(/\t/g, '\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0')
 })
 
 function hexToUtf8(s) {
