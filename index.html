@@ -1,5 +1,5 @@
 <h1>Large Text Uploader - Ethereum</h1>
-<p>This tool uses transaction calldata to upload large batches of text to the Ethereum blockchain.</p>
+<p>This tool uses transaction calldata to upload large batches of text to the Ethereum blockchain</p>
 <p>Each transaction is limited to ~500k characters. If your transaction fails, split it into parts and try again.</p>
 
 <textarea placeholder="Copy text here..." rows="20" cols="80" id="upload-text"></textarea>
@@ -28,11 +28,6 @@
 
 <script>
 
-// indexed by chain ID
-const contract_addresses = {
-        "0x1": "0xfd6d80e677bf8e22f2a09c56f29594d216f23279",
-}
-
 // Update char count while typing
 document.getElementById('upload-text').addEventListener('input', async function (e) {
   const charCount = document.getElementById('upload-text').value.length
@@ -47,9 +42,6 @@ document.getElementById('submit-text').addEventListener('click', async function 
     .map(c => c.toString(16).padStart(2, "0"))
     .join("")
 
-  const chainId = await window.ethereum.request({
-    method: "eth_chainId"
-  })
   const accounts = await window.ethereum.request({
     method: "eth_requestAccounts"
   })
@@ -58,7 +50,7 @@ document.getElementById('submit-text').addEventListener('click', async function 
     params: [
       {
         from: accounts[0],
-        to: contract_addresses[chainId],
+        to: "0xfd6d80e677bf8e22f2a09c56f29594d216f23279",
         value: '0',
         data: '0x' + utf8text
       },
